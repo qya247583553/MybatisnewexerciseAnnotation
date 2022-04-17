@@ -3,9 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Mapper.TestMapper">
+
     <resultMap id="Test" type="Student">
         <result column="sid" property="studentid"></result>
     </resultMap>
+
     <select id="selectStudents" resultMap="Test">
         select * from student.stduentinformation
     </select>
@@ -13,6 +15,21 @@
     <select id="getStudentid" parameterType="int" resultMap="Test">
 /*查询单条数据*/
         select * from  student.stduentinformation where sid=#{studnetid}
+<!--        <if test="sid%2==0">-->
+<!--            and sex='1'-->
+        <!--        </if>-->
+    
+<choose>
+<when test="sid==1">
+    and sex='1'
+</when>
+<when test="sid==2">
+    and sex='1'
+</when>
+<otherwise>
+    and sex='0'
+</otherwise>
+    </choose>
     </select>
 
     <insert id="addStudent" parameterType="Student">
@@ -24,4 +41,38 @@
 /*删除操作*/
         delete from student.stduentinformation where sid=#{studentid}
     </delete>
+
+    <!--一对一-->
+<!--    <select id="getTeacherByID" resultMap="asTeacher">-->
+<!--        select *, student.teacher.tname as teachername from student.stduentinformation inner join student.teach on stduentinformation.sid = teach.sid-->
+<!--                                                     inner join student.teacher on teach.tid = teacher.tid where teach.tid = #{tid}-->
+<!--    </select>-->
+
+<!--    <resultMap id="asTeacher" type="Teacher">-->
+<!--        <id column="tid" property="tid"/>-->
+<!--        <result column="teachername" property="tname"/>-->
+<!--        <collection property="studentList" ofType="Student">-->
+<!--            <id property="studentid" column="sid"/>-->
+<!--            <result column="name" property="name"/>-->
+<!--            <result column="sex" property="sex"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+    <!--一对多-->
+    <select id="selectTeacherStudent" resultMap="Test2">
+        select *, student.teacher.tname as teachername from student.stduentinformation left join student.teach on stduentinformation.sid = teach.sid
+                                                     left join student.teacher on teach.tid = teacher.tid
+        where teach.tid=#{tid}
+    </select>
+
+    <resultMap id="Test2" type="Student">
+        <id column="sid" property="studentid"/>
+        <result column="sname" property="sname"/>
+        <result column="sex" property="sex"/>
+        <association property="teacher" javaType="Teacher">
+            <id column="tid" property="tid"/>
+            <result column="tname" property="tname"/>
+        </association>
+    </resultMap>
+
 </mapper>

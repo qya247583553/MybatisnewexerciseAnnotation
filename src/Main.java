@@ -13,8 +13,10 @@ public class Main {
             // mapper.selectStudents().forEach(System.out::println);
             //System.out.println(mapper.getStudentid(1));
             //System.out.println(mapper.addStudent(new Student().setSname("小王").setSex("2")));
-            System.out.println(mapper.deleteStudent(3));
-
+            //System.out.println(mapper.deleteStudent(3));
+            //System.out.println(mapper.getTeacherByID(1));
+            //mapper.selectTeacherStudent(1).forEach(System.out::println);
+            System.out.println(mapper.getStudentid(1));
         }
     }
 }

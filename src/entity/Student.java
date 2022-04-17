@@ -14,4 +14,5 @@ public class Student {
     int studentid;
     String  sname;
     String    sex;
+    //Teacher teacher;(需要时候写，不需要不用)
 }
