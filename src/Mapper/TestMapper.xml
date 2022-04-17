@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.TestMapper">
+    <resultMap id="Test" type="Student">
+        <result column="sid" property="studentid"></result>
+    </resultMap>
+    <select id="selectStudents" resultMap="Test">
+        select * from student.stduentinformation
+    </select>
+
+    <select id="getStudentid" parameterType="int" resultMap="Test">
+/*查询单条数据*/
+        select * from  student.stduentinformation where sid=#{studnetid}
+    </select>
+
+    <insert id="addStudent" parameterType="Student">
+        /*插入操作*/
+        insert into student.stduentinformation (sname, sex) VALUES (#{sname},#{sex})
+    </insert>
+
+    <delete id="deleteStudent" parameterType="Student">
+/*删除操作*/
+        delete from student.stduentinformation where sid=#{studentid}
+    </delete>
+</mapper>
